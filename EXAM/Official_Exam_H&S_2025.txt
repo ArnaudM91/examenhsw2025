@@ -1,4 +1,4 @@
-***EXAM***
+***EXAM MOLARD Arnaud***
 
 *** Questions ***
 
@@ -8,11 +8,21 @@ The stack is placed before the data because of how it grows in the data section.
 
 2- Explain commit 7dccc4f2 ?
 
-The commit is talking about the fix of a bug related to long-running tasks. When the code is making a KO we do add a panic() function.
+The commit is talking about the fix of a bug related to long-running tasks. When the code is making a KO we do add and use a panic() function.
 
 3- With reference to commit f45bf29b, draft jiffies_to_us() and us_to_jiffies ?
 
-TO BE COMPLETED
+This commit is converting a jiffies value into a µs value and vice versa.
+
+static inline unsigned long us_to_jiffies(int us)
+{
+       return (us * HZ / 10⁶) ?: us ? 1 : 0;
+}
+
+static inline int jiffies_to_us(unsigned long j)
+{
+       return (j * 10⁶ + HZ/2) / HZ;
+}
 
 4- What is the main electrical difference between SPI and I2C ?
 
@@ -30,6 +40,8 @@ For debugging, it can be good, we call this thing a shunt resistor.
 ***Problems***
 
 1- In the shell program, add a command that plays a tune with the buzzer
+
+Look at shell_program_with_buzzer.c
 
 2- Write an API to blink leds and a test program for the TDC board
 
@@ -52,24 +64,8 @@ void LED_Blink(struct led_num*);
 
 #endif
 
-3- Create a DAC driven by 6-8 GPIO pins to feed a small loudspeaker
-with phone-quality audio (4kHz bandwidth), and draft the related
-application. You can use a component like 4609X-101-103LF, for which
-the data-sheet is commited as 4600x.pdf .
-
-4- Starting with the TDC schematic as a reference, change the circuit
-so that the analog inputs of J201 include a negative voltage range.
-According to your circuit, write the conversion function from the
-value returned from the microcontrollers'a ADC to millivolts on the
-connector (the ADC returns a number in the range 0-1023).
-
-5- Draft a thermostat application for the TDC board, using GPIO 1-14
-to turn on the heater and the local MCP9701 as a thermometer.
-
-6- Write an API for neopixels so the application can ask for a string
-of RGB values to be displayed on a WS2812B string; use it to drive our
-3 devices on the TDC board.
-
 7- Draft an application for a coffe emachine, assuing the local MCP9701
 is the water thermometer, gpio 1-14 drives the heather, gpio 0-7 is
 the water pump and user buttons are connected to the TDC inputs.
+
+Look at the paper.
