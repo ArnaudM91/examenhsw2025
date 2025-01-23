@@ -1,0 +1,75 @@
+***EXAM***
+
+*** Questions ***
+
+1- Why did I choose to place the stack before the data ?
+
+The stack is placed before the data because of how it grows in the data section. We can control it better, it may prevent from data overflow and corrupting data.
+
+2- Explain commit 7dccc4f2 ?
+
+The commit is talking about the fix of a bug related to long-running tasks. When the code is making a KO we do add a panic() function.
+
+3- With reference to commit f45bf29b, draft jiffies_to_us() and us_to_jiffies ?
+
+TO BE COMPLETED
+
+4- What is the main electrical difference between SPI and I2C ?
+
+The main electrical difference between SPI and I2C is that SPI is a 4-wire mode (MOSI : Master Out Slave In, MISO : Master In Slave Out , Clock, Ground) and I2C is 2-wire mode (TX : Transmission Data and RX : Reception Data ).
+
+5- In the TDC board, explain why U7 is connected to GPIO 0-22 and what is the role of R23.
+
+Accord to the datasheet, the output pin VoutB is an analog output voltage pins driven by its own output buffer. U7 component is DAC converter with EEPROM memory. And the 4K7Ohm R23 resistor is a load resistance that according to the datasheet must be around 5kOhm for voltage regulation.
+
+6- In the TDC board, explain the role of R14.
+
+In the TDC board, the role of R14 is too isolate the voltage regulator, if a problem occurs on the TDC board.
+For debugging, it can be good, we call this thing a shunt resistor.
+
+***Problems***
+
+1- In the shell program, add a command that plays a tune with the buzzer
+
+2- Write an API to blink leds and a test program for the TDC board
+
+#ifndef LEDBLINK_CONTROL_H
+#define LEDBLINK_CONTROL_H
+
+struct lednum{
+	int gpio;
+	int delay_ms;
+};
+
+#define LED_BLINK_ON 0x0001
+#define LED_BLINK_OFF 0x0000
+#define LED_BLINKING 
+
+void LED_Init(void);
+void LED_On(struct led_num*);
+void LED_Off(struct led_num*);
+void LED_Blink(struct led_num*);
+
+#endif
+
+3- Create a DAC driven by 6-8 GPIO pins to feed a small loudspeaker
+with phone-quality audio (4kHz bandwidth), and draft the related
+application. You can use a component like 4609X-101-103LF, for which
+the data-sheet is commited as 4600x.pdf .
+
+4- Starting with the TDC schematic as a reference, change the circuit
+so that the analog inputs of J201 include a negative voltage range.
+According to your circuit, write the conversion function from the
+value returned from the microcontrollers'a ADC to millivolts on the
+connector (the ADC returns a number in the range 0-1023).
+
+5- Draft a thermostat application for the TDC board, using GPIO 1-14
+to turn on the heater and the local MCP9701 as a thermometer.
+
+6- Write an API for neopixels so the application can ask for a string
+of RGB values to be displayed on a WS2812B string; use it to drive our
+3 devices on the TDC board.
+
+7- Draft an application for a coffe emachine, assuing the local MCP9701
+is the water thermometer, gpio 1-14 drives the heather, gpio 0-7 is
+the water pump and user buttons are connected to the TDC inputs.
