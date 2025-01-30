@@ -1,0 +1,59 @@
+***EXAM Arnaud Molard 30-01-25***
+
+__Questions :__
+
+1- Explain the asm() construct in commit 35e3df3a
+
+This is an assembler function also call (asm()) using to move some data into the data structure.
+"mov ..." is used to move something into the stack, the input is "%%rsp" and the output is "%0".
+
+2- Explain commit 09f2316d
+
+We add into the code the "__task_first" and "__task_last" in the linker script, this typically used to mark the start and the end of a specific section of memory.
+
+3- Explain commit 8170c532
+
+The role of __attribute__((__section__(".oper"), used, __aligned__(1))) is to tell to the compiler to place a specific variable or function into a custom ELF section named .oper., in this case "used" is add in order for the optimizer to not drop them from emitted data.
+
+
+4- What is the main electrical difference between SPI and I2C?
+
+The main electrical difference between SPI and I2C is that SPI is a 4-wire mode (MOSI : Master Out Slave In, MISO : Master In Slave Out , Clock, CS : Chip Select) and I2C is 2-wire mode (TX : Transmission Data and RX : Reception Data ).
+
+We may prefer used the I2C because in term of hardware, this take less place and SPI is communication that we not use at all.
+Also, we can drive I2C from GPIO, but we can't be an I2C slave in GPIO and we can use adresses.
+SPI, we need to use a Chip Select for all the slave.
+
+5- In the TDC board, explain why U7 (which is a DAC with internal sharp
+voltage reference) is connected to GPIO 0-22 and what is the role of R23
+(please disregard the fact that U7 is not mounted in your specimen)
+
+Accord to the datasheet, the output pin VoutB is an analog output voltage pins driven by its own output buffer. U7 component is DAC converter with EEPROM memory. And the 4K7Ohm R23 resistor is a load resistance that according to the datasheet must be around 5kOhm for current/voltage regulation.
+
+6- In the TDC board, explain the role of R3 and R4
+
+According to the datasheet, the resistor R3 and R4 is used as a pull-up resistor to provide an output functionnality.
+Check UM10462 p.289 
+
+__Problems__
+
+Please start solving 2 of the following problems.
+
+1- In the shell program (sw/tests-lpc/shell.c), add a command that
+plays a tune with the buzzer
+
+Look at shell_program_with_buzzer_250130.c
+
+2- Starting with the TDC schematic as a reference, change the circuit
+so that the analog inputs of J201 include a negative voltage range.
+According to your circuit, write the conversion function from the
+value returned from the microcontrollers'a ADC to millivolts on the
+connector (the ADC returns a number in the range 0-1023).
+
+We can convert the ADC value into mV with the function :
+In this case I use a 5V on my schematic and then we need at least to divide it by 1023 (because of the range we want).
+And I think we gonna have a mV value with the ADC_Value that we have.
+
+mV = (ADC_Value * 5000) / 1023
+
+Look at AnalogPin_With_Negative_Voltage_Range on Kicad.
